@@ -10,14 +10,14 @@ var powered = [true];
 var nlDur = 60, nlTar = 0;
 var nlMode = false;
 var selectedFx = 0;
-var csel = 0; // selected color slot (0-2)
+var csel = 0; // 所选颜色槽(0-2)
 var currentPreset = -1;
 var lastUpdate = 0;
 var segCount = 0, ledCount = 0, lowestUnused = 0, maxSeg = 0, lSeg = 0;
 var pcMode = false, pcModeA = false, lastw = 0;
 var tr = 7;
 var d = document;
-const ranges = RangeTouch.setup('input[type="range"]', {});
+const ranges = RangeTouch.setup('input[type="range"]', {});//创建触摸实例
 var palettesData;
 var pJson = {};
 var pN = "", pI = 0, pNum = 0;
@@ -38,14 +38,15 @@ var hol = [
 	[2024,2,31,2,"https://aircoookie.github.io/easter.png"]
 ];
 
+//iro.js创建新的颜色选择器
 var cpick = new iro.ColorPicker("#picker", {
-	width: 260,
-	wheelLightness: false,
-	wheelAngle: 270,
-	wheelDirection: "clockwise",
+	width: 260,//控件的总宽度。
+	wheelLightness: false,//设置为 `false`, 当亮度降低时，颜色轮将不会变成黑色.
+	wheelAngle: 270,//色轮的色调渐变的起始角度，以度为单位。
+	wheelDirection: "clockwise",//颜色轮的色调渐变方向；可选 顺时针`"clockwise"` 或 逆时针`"anticlockwise"`。
 	layout: [
 		{
-			component: iro.ui.Wheel,
+			component: iro.ui.Wheel,//可选组件，Wheel 轮子， Box 盒子，Sliders 滑块
 			options: {}
 		}
 	]
@@ -65,18 +66,18 @@ function isRgbBlack(a, s) {
 	return (a[s][0] == 0 && a[s][1] == 0 && a[s][2] == 0);
 }
 
-// returns RGB color from a given slot s 0-2 from color array a
+//从颜色数组a返回给定插槽s 0-2中的RGB颜色
 function rgbStr(a, s) {
 	return "rgb(" + a[s][0] + "," + a[s][1] + "," + a[s][2] + ")";
 }
 
-// brightness approximation for selecting white as text color if background bri < 127, and black if higher
+//亮度近似值，用于在背景亮度<127时选择白色作为文本颜色，如果背景亮度较高，则选择黑色作为文本颜色
 function rgbBri(a, s) {
 	var R = a[s][0], G = a[s][1], B = a[s][2];
 	return 0.2126*R + 0.7152*G + 0.0722*B;
 }
 
-// sets background of color slot selectors
+// 设置颜色槽选择器的背景
 function setCSL(s) {
 	var cd = d.getElementsByClassName('cl')[s];
 	var w = whites[s];
@@ -171,6 +172,7 @@ function cTheme(light) {
 	}
 }
 
+//导入背景图片
 function loadBg(iUrl) {
 	let bg = d.getElementById('bg');
 	let img = d.createElement("img");
@@ -1250,7 +1252,7 @@ function requestJson(command, rinfo = true) {
 		console.log(error);
 	});
 }
-
+//开关操作
 function togglePower() {
 	isOn = !isOn;
 	var obj = {"on": isOn};
@@ -1281,7 +1283,7 @@ function toggleSync() {
 	if (syncTglRecv) obj.udpn.recv = syncSend;
 	requestJson(obj);
 }
-
+//实时传输模式
 function toggleLiveview() {
 	isLv = !isLv;
 	d.getElementById('liveview').style.display = (isLv) ? "block":"none";

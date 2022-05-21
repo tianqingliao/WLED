@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Aircoookie/WLED#readme",
   "dependencies": {
+    "build": "^0.1.4",
     "clean-css": "^4.2.3",
     "html-minifier-terser": "^5.1.1",
     "inliner": "^1.13.1",
